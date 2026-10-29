@@ -1,0 +1,40 @@
+<!--
+  ietf-tpm-remote-attestation の初期設定（design/04_rfc9684_yang.md §5）
+  - tpm0: swtpm（TPM 2.0）。sha256 bank の PCR 0〜10 を Verifier に見せる
+  - ak-cert-0: AK（0x81010002）を指す名前。RPC 出力の certificate-name（leafref）の参照先
+  - attester-supported-algos: RPC 入力の tpm20-hash-algo の must の参照先
+  投入: sudo sysrepocfg --import=rats-init.xml -d running -m ietf-tpm-remote-attestation
+-->
+<rats-support-structures xmlns="urn:ietf:params:xml:ns:yang:ietf-tpm-remote-attestation"
+                         xmlns:taa="urn:ietf:params:xml:ns:yang:ietf-tcg-algs">
+  <tpms>
+    <tpm>
+      <name>tpm0</name>
+      <firmware-version>taa:tpm20</firmware-version>
+      <tpm20-pcr-bank>
+        <tpm20-hash-algo>taa:TPM_ALG_SHA256</tpm20-hash-algo>
+        <pcr-index>0</pcr-index>
+        <pcr-index>1</pcr-index>
+        <pcr-index>2</pcr-index>
+        <pcr-index>3</pcr-index>
+        <pcr-index>4</pcr-index>
+        <pcr-index>5</pcr-index>
+        <pcr-index>6</pcr-index>
+        <pcr-index>7</pcr-index>
+        <pcr-index>8</pcr-index>
+        <pcr-index>9</pcr-index>
+        <pcr-index>10</pcr-index>
+      </tpm20-pcr-bank>
+      <certificates>
+        <certificate>
+          <name>ak-cert-0</name>
+          <type>local-attestation-certificate</type>
+        </certificate>
+      </certificates>
+    </tpm>
+  </tpms>
+  <attester-supported-algos>
+    <tpm20-asymmetric-signing>taa:TPM_ALG_ECDSA</tpm20-asymmetric-signing>
+    <tpm20-hash>taa:TPM_ALG_SHA256</tpm20-hash>
+  </attester-supported-algos>
+</rats-support-structures>

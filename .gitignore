@@ -1,0 +1,17 @@
+# build（provision_ak.sh の出力 build/keys/ も含む）
+build/
+# provision_ak.sh をソースのまま実行したときの出力
+/attester/keys/
+*.so
+*.o
+
+# verifier の生成物
+verifier/state/*
+!verifier/state/.gitkeep
+verifier/out/*
+!verifier/out/.gitkeep
+verifier/nonce.bin
+verifier/challenge.xml
+verifier/reply.xml
+verifier/enroll/*
+

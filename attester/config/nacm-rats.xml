@@ -1,0 +1,50 @@
+<!--
+  ietf-tpm-remote-attestation 用の NACM ルール（design/04_rfc9684_yang.md §7）
+  - verifiers（ubuntu）: tpm20-challenge-response-attestation の exec と rats-support-structures の read を許可
+  - それ以外のユーザー: 同モジュールの RPC と read をすべて拒否（RFC 9684 §4 の deny-all の推奨）
+  投入（既存ルールを消さないよう merge）:
+    sudo sysrepocfg --edit=nacm-rats.xml -d running -m ietf-netconf-acm
+-->
+<nacm xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-acm">
+  <groups>
+    <group>
+      <name>verifiers</name>
+      <user-name>ubuntu</user-name>
+    </group>
+  </groups>
+  <rule-list>
+    <name>rats-verifiers</name>
+    <group>verifiers</group>
+    <rule>
+      <name>permit-tpm20-attestation</name>
+      <module-name>ietf-tpm-remote-attestation</module-name>
+      <rpc-name>tpm20-challenge-response-attestation</rpc-name>
+      <access-operations>exec</access-operations>
+      <action>permit</action>
+    </rule>
+    <rule>
+      <name>permit-read-rats-support-structures</name>
+      <module-name>ietf-tpm-remote-attestation</module-name>
+      <path xmlns:tpm="urn:ietf:params:xml:ns:yang:ietf-tpm-remote-attestation">/tpm:rats-support-structures</path>
+      <access-operations>read</access-operations>
+      <action>permit</action>
+    </rule>
+  </rule-list>
+  <rule-list>
+    <name>rats-deny-others</name>
+    <group>*</group>
+    <rule>
+      <name>deny-rats-rpc</name>
+      <module-name>ietf-tpm-remote-attestation</module-name>
+      <rpc-name>*</rpc-name>
+      <access-operations>exec</access-operations>
+      <action>deny</action>
+    </rule>
+    <rule>
+      <name>deny-rats-read</name>
+      <module-name>ietf-tpm-remote-attestation</module-name>
+      <access-operations>read</access-operations>
+      <action>deny</action>
+    </rule>
+  </rule-list>
+</nacm>

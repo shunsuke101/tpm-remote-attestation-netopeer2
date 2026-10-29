@@ -1,0 +1,26 @@
+<!--
+  tpm20-challenge-response-attestation の challenge（doc/design/05_challenge_response.md §4.1）
+  netopeer2-cli の user-rpc の content オプションに渡す形。rpc の外枠は付けず、RPC の要素だけを書く。
+  nonce-value の中身は、src/make_challenge.sh が 32 バイトの nonce（base64）に置き換える。
+  feature mtpm は無効なので certificate-name は書かない。
+  注意: XML のコメントの中には、ハイフン 2 つの並びを書けない（厳密なパーサが拒否する）。置き換えの目印もここには書かない。
+-->
+<tpm20-challenge-response-attestation xmlns="urn:ietf:params:xml:ns:yang:ietf-tpm-remote-attestation">
+  <tpm20-attestation-challenge>
+    <nonce-value>@NONCE_B64@</nonce-value>
+    <tpm20-pcr-selection>
+      <tpm20-hash-algo xmlns:taa="urn:ietf:params:xml:ns:yang:ietf-tcg-algs">taa:TPM_ALG_SHA256</tpm20-hash-algo>
+      <pcr-index>0</pcr-index>
+      <pcr-index>1</pcr-index>
+      <pcr-index>2</pcr-index>
+      <pcr-index>3</pcr-index>
+      <pcr-index>4</pcr-index>
+      <pcr-index>5</pcr-index>
+      <pcr-index>6</pcr-index>
+      <pcr-index>7</pcr-index>
+      <pcr-index>8</pcr-index>
+      <pcr-index>9</pcr-index>
+      <pcr-index>10</pcr-index>
+    </tpm20-pcr-selection>
+  </tpm20-attestation-challenge>
+</tpm20-challenge-response-attestation>

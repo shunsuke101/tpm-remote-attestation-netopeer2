@@ -1,0 +1,24 @@
+<!--
+  yanglint 用のサンプル（doc/design/04_rfc9684_yang.md §3 (4)）。
+  doc/design/05_challenge_response.md §4.1 の challenge に、固定の nonce（0x00〜0x1f の 32 バイト）を入れたもの。
+  実際の attestation には使わない（nonce は毎回 verifier/src/make_challenge.sh で生成する）。
+-->
+<tpm20-challenge-response-attestation xmlns="urn:ietf:params:xml:ns:yang:ietf-tpm-remote-attestation">
+  <tpm20-attestation-challenge>
+    <nonce-value>AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=</nonce-value>
+    <tpm20-pcr-selection>
+      <tpm20-hash-algo xmlns:taa="urn:ietf:params:xml:ns:yang:ietf-tcg-algs">taa:TPM_ALG_SHA256</tpm20-hash-algo>
+      <pcr-index>0</pcr-index>
+      <pcr-index>1</pcr-index>
+      <pcr-index>2</pcr-index>
+      <pcr-index>3</pcr-index>
+      <pcr-index>4</pcr-index>
+      <pcr-index>5</pcr-index>
+      <pcr-index>6</pcr-index>
+      <pcr-index>7</pcr-index>
+      <pcr-index>8</pcr-index>
+      <pcr-index>9</pcr-index>
+      <pcr-index>10</pcr-index>
+    </tpm20-pcr-selection>
+  </tpm20-attestation-challenge>
+</tpm20-challenge-response-attestation>
